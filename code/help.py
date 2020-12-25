@@ -307,7 +307,7 @@ def update_active_contexts_cache(active_contexts):
     cached_active_contexts_list = active_contexts
 
 #example usage todo: make a list definable in .talon
-#overrides = {"generic browser" : "broswer"}
+#overrides = {"generic browser" : "browser"}
 overrides = {}
 def refresh_context_command_map(enabled_only = False):
     global rule_word_map
