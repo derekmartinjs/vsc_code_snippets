@@ -39,9 +39,6 @@ action(edit.extend_line_end):
 action(edit.extend_line_start):
   key(cmd-shift-left)
 
-action(edit.extend_line_end):
-  key(cmd-shift-right)
-
 action(edit.extend_line_up):
   key(shift-up cmd-shift-left)
 
@@ -102,8 +99,8 @@ action(edit.line_insert_up):
 action(edit.line_start):
   key(cmd-left)
 
-action(edit.jump_line(n: int):
-  key(cmd-left)
+#action(edit.jump_line(n: int):
+#  key(cmd-left)
 
 action(edit.line_up):
   key(up cmd-left)

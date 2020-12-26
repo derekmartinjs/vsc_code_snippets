@@ -116,9 +116,10 @@ class Actions:
     global forced_language
     forced_language = False
 
+
     for _, lang in extension_lang_map.items():
       actions.mode.disable("user.{}".format(lang))
-    # app.notify("Cleared language modes")
+      app.notify("Cleared language modes")
  
   def code_operator_indirection():
     """code_operator_indirection"""
