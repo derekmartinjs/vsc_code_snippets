@@ -29,7 +29,6 @@ action(edit.extend_file_start):
 
 action(edit.extend_left):
   key(shift-left)
-#action(edit.extend_line):
 
 action(edit.extend_line_down):
   key(shift-down cmd-shift-right)
@@ -101,6 +100,9 @@ action(edit.line_insert_up):
   key(cmd-left enter up)
 
 action(edit.line_start):
+  key(cmd-left)
+
+action(edit.jump_line(n: int):
   key(cmd-left)
 
 action(edit.line_up):

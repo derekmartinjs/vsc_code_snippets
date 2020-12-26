@@ -26,6 +26,7 @@ talon wake: speech.enable()
   mode.disable("sleep")
   mode.disable("dictation")
   mode.enable("command")
+  
 #^force see sharp$: user.code_set_language_mode("csharp")
 #^force see plus plus$: user.code_set_language_mode("cplusplus")
 #^force go (lang|language)$: user.code_set_language_mode("go")

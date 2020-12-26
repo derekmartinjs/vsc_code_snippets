@@ -47,11 +47,11 @@ class edit_actions:
   def line_clone():
     actions.key("shift-alt-down")
 
-  def jump_line(n: int):
-    actions.user.vscode("workbench.action.gotoLine")
-    actions.insert(str(n))
-    actions.key("enter")
-
+ # def jump_line(n: int):
+ #   actions.user.vscode("workbench.action.gotoLine")
+ #   actions.insert(str(n))
+#    actions.key("enter")
+    
 @mod.action_class
 class Actions:
   def vscode(command: str):
@@ -72,8 +72,15 @@ class Actions:
       Execute command via the command palette. 
       Does NOT preserve the clipboard for commands like copyFilePath
     """
-    pass
+    clip.set_text(f"{command}")
+    if not is_mac:
+      actions.key("ctrl-shift-p")
+    else:
+      actions.key("cmd-shift-p")
 
+    actions.edit.paste()
+    actions.key("enter")
+ 
 class user_actions:
   # snippet.py support beginHelp close 
   def snippet_search(text: str):

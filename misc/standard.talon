@@ -12,6 +12,9 @@ grep: "grep \n"
 
 empty array: "[]"
 
+string U T F eight: 
+  insert("'utf8'")
+  
 # System functions
 zoom [in]: edit.zoom_in()
 more zoom: edit.zoom_in()

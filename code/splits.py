@@ -34,3 +34,9 @@ class Actions:
 
   def split_clear_all():
         """Clears all splits"""
+
+  def split_last():
+    """Splits the last window"""
+
+  def split_next():
+    """Splits the next window"""
