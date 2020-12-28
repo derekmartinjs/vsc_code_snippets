@@ -5,39 +5,40 @@ is_mac = app.platform == "mac"
 
 ctx = Context()
 mod = Module()
-#wmod.apps.vscode = "app.name: Code.exe"
-#mod.apps.vscode = "app.name: Visual Studio Code"
-#mod.apps.vscode = "app.name: Code"
-#mod.apps.vscode = "app.name: Code - OSS"
+mod.apps.vscode = "app.name: Code"
 
-ctx.matches = r"""
-app: vscode
-"""
+ctx.matches = r'''
+    app: Code
+    app: Code - OSS
+    app: Code
+    app: Visual Studio Code
+    app: Code.exe
+'''
 
 @ctx.action_class("win")
 class win_actions: 
   def filename():
-    title = actions.win.title
+    title = ui.active_window().doc
+    # this doesn't seem to be necessary on VSCode for Mac
+    # if title == "":
+#    title = ui.active_window().doc
 
     if is_mac:
-      result = title.split(" - ")[0]
+        result = title.split(" — ")[0]
+    else:
+        result = title.split(" - ")[0]
 
     if "." in result:
-      return result
+        return result
 
+    return ""
   def file_ext():
     return actions.win.filename().split(".")[-1]
 
 @ctx.action_class("edit")
 class edit_actions:
   def find(text: str):
-    if is_mac:
-      actions.key("cmd-f")
-    else:
-      actions.key("ctrl-f")
-
-    actions.insert(text)
-
+      pass
   def line_swap_up():
     actions.key("alt-up")
 
@@ -47,10 +48,10 @@ class edit_actions:
   def line_clone():
     actions.key("shift-alt-down")
 
- # def jump_line(n: int):
- #   actions.user.vscode("workbench.action.gotoLine")
- #   actions.insert(str(n))
-#    actions.key("enter")
+  def jump_line(n: int):
+    actions.user.vscode("workbench.action.gotoLine")
+    actions.insert(str(n))
+    actions.key("enter")
     
 @mod.action_class
 class Actions:
@@ -81,14 +82,12 @@ class Actions:
     actions.edit.paste()
     actions.key("enter")
  
+@ctx.action_class("user")
 class user_actions:
-  # snippet.py support beginHelp close 
-  class user_actions:
-    # snippet.py support beginHelp close
     def snippet_search(text: str):
-        actions.user.vscode("Insert Snippet")
-        actions.insert(text)
-
+      actions.user.vscode("Insert Snippet")
+      actions.insert(text)
+    
     def snippet_insert(text: str):
         """Inserts a snippet"""
         actions.user.vscode("Insert Snippet")
@@ -104,17 +103,16 @@ class user_actions:
     def tab_jump(number: int):
         if number < 10:
             if is_mac:
-                actions.key("ctrl-{}".format(number))
+                actions.key("cmd-{}".format(number))
             else:
                 actions.key("alt-{}".format(number))
 
     def tab_final():
-        if is_mac:
+        if not is_mac:
             actions.key("ctrl-0")
         else:
-            actions.key("alt-0")
+            actions.key("cmd-0")
 
-    # splits.py support begin
     def split_number(index: int):
         """Navigates to a the specified split"""
         if index < 9:
@@ -122,20 +120,6 @@ class user_actions:
                 actions.key("cmd-{}".format(index))
             else:
                 actions.key("ctrl-{}".format(index))
-
-    # splits.py support end
-
-    # find_and_replace.py support begin
-
-    def find(text: str):
-        """Triggers find in current editor"""
-        if is_mac:
-            actions.key("cmd-f")
-        else:
-            actions.key("ctrl-f")
-
-        if text:
-            actions.insert(text)
 
     def find_next():
         actions.key("enter")
@@ -217,7 +201,4 @@ class user_actions:
         actions.edit.find(text)
         actions.sleep("100ms")
         actions.key("esc")
-
-
-  """ find_and_replace.py support ends """
-
+    """ find_and_replace.py support ends """

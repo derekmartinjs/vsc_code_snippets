@@ -40,3 +40,6 @@ class Actions:
 
   def split_next():
     """Splits the next window"""
+  
+  def split_number(index: int):
+    """Navigates to a the specified split"""

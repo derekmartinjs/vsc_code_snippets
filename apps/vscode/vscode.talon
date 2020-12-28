@@ -6,6 +6,7 @@ tag(): user.multiple_cursors
 tag(): user.snippets
 tag(): user.splits
 tag(): user.tabs
+#tag(): user.ide
 
 # Tabs 
 action(app.tab_close): user.vscode("workbench.action.closeActiveEditor")
@@ -14,7 +15,6 @@ action(app.tab_previous): user.vscode("workbench.action.previousEditorInGroup")
 action(app.tab_reopen): user.vscode("workbench.action.reopenClosedEditor")
 action(app.window_close): user.vscode("workbench.action.closeWindow")
 action(app.window_open): user.vscode("workbench.action.newWindow")
-
 # App Actions
 
 # talon code actions  
@@ -52,9 +52,23 @@ action(user.multi_cursor_select_fewer_occurrences): user.vscode("Cursor Undo")
 action(user.multi_cursor_select_more_occurrences): user.vscode("Add Selection To Next Find Match")
 
 # multiple_cursor.py support ends here
-please [<user.text>]:
-  user.vscode("Show All Commands")
-  insert(user.text or "")
+#please [<user.text>]:
+#  user.vscode("Show All Commands")
+ # insert(user.text or "")
+
+show palette: 
+  key(cmd-shift-p)
+  key(' ')
+
+search for <user.text>:
+  user.vscode("workbench.action.terminal.focusFind")
+  sleep(20ms)
+  insert(text)
+ 
+code search for <user.text>:
+  user.vscode("actions.find")
+  sleep(20ms)
+  insert(text)
 
 # Sidebar
 bar explore: user.vscode("workbench.view.explorer")
@@ -73,6 +87,7 @@ panel switch: user.vscode("workbench.action.togglePanel")
 panel terminal: user.vscode("workbench.action.terminal.focus")
 
 # Settings
+(show | hide) status bar: user.vscode("workbench.action.toggleStatusbarVisibility")
 show settings: user.vscode("workbench.action.openGlobalSettings")
 show shortcuts: user.vscode("workbench.action.openGlobalKeybindings")
 show snippets: user.vscode("workbench.action.openSnippets")
@@ -85,13 +100,16 @@ wrap switch: user.vscode("editor.action.toggleWordWrap")
 zen switch: user.vscode("workbench.action.toggleZenMode")
 
 # File commands
-file hunt [<user.text>]:
-  user.vscode("Go to File")
-  sleep(70ms)
-  insert(text or "")
+#file hunt [<user.t1ext>]: 
+#  user.vscode("Go to File")
+#  sleep(70ms)
+#  insert(text or "")
   
 file copy path: user.vscode_ignore_clipboard('copyPathOfActiveFile')
-file create sibling: user.vscode('File: New File')
+file create sibling: 
+  user.vscode('explorer.newFile')
+  sleep(25ms)
+  
 file create: user.vscode('File: New Untitled File')
 file reveal: user.vscode('revealInSideBar')
 file save: user.vscode('workbench.action.files.save')
@@ -100,6 +118,18 @@ reveal file in finder: user.vscode("revealFileInOS")
 
 # Language features
 suggest show: user.vscode("editor.action.triggerSuggest")
+(suggest) accept: key(enter)
+code suggest: user.vscode("editor.action.triggerSuggest")
+
+
+done: 
+  key('tab')
+  key(enter)
+
+# extractions 
+ex track variable: user.vscode("Extract Variable")
+in sert snippet: user.vscode("editor.action.insertSnippet")
+
 
 hint show: user.vscode("editor.action.triggerParameterHints")
 definition show: user.vscode("editor.action.revealDefinition")
@@ -129,6 +159,16 @@ go recent: user.vscode("File: Open Recent")
 go type: user.vscode("editor.action.goToTypeDefinition")
 go usage: user.vscode("References: Find All References")
 
+(show | hide) whitespace: user.vscode("editor.action.toggleRenderWhitespace")
+(show | hide) breadcrumbs: user.vscode("breadcrumbs.toggle")
+(show | hide) past commands: user.vscode("workbench.action.showCommands")
+
+go to line <number>: 
+  user.vscode("workbench.action.gotoLine")
+  sleep(20ms)
+  insert(number)
+  key(enter)
+
 # Bookmarks (requires plugin)
 go marks: user.vscode("View: Show Bookmarks")
 toggle mark: user.vscode("Bookmarks: Toggle")
@@ -145,19 +185,22 @@ unfold all: user.vscode("editor.unfoldAll")
 fold comments: user.vscode("editor.foldAllBlockComments")
 
 # Git / Github (not using verb-noun-adjective pattern, mirroring terminal commands.)
-git branch: user.vscode("git.branchFrom")
+git add patch: user.vscode('git.stageSelectedRanges')
+#git branch: user.vscode("git.branchFrom")
+#git branch <user.branch>: user.vscode("git.branch")
 git branch this: user.vscode("git.branch")
 git checkout: user.vscode("git.checkout")
 git commit: user.vscode("git.Show All Commands")
 git commit undo: user.vscode("git.undoCommit")
 git commit amend: user.vscode("git.commitStagedAmend")
 git diff: user.vscode("git.openChange")
-
+git in it: user.vscode("git.init")
 git ignore: user.vscode("git.ignore")
 git merge: user.vscode('git.merge')
 git output: user.vscode('git.showOutput')
 git pull: user.vscode('git.pullRebase')
 git push: user.vscode('git.push')
+
 git push focus: user.vscode('git.pushForce')
 
 git rebase abort: user.vscode('git.rebaseAbort')
@@ -170,6 +213,18 @@ git stage all: user.vscode('git.stageAll')
 git unstage: user.vscode('git.unstage')
 git unstage all: user.vscode('git.unstageAll')
 
+# Testing 
+(start | launch ) wall a bee: 
+  user.vscode("Wallaby.js start")
+  
+launch test suite: 
+#  user.vscode("workbench.action.terminal.new")
+  user.vscode("workbench.action.terminal.focus")
+  sleep(30ms)
+  insert("yarn test")
+  key(enter)
+
+  
 # Debugging
 break point: user.vscode("editor.debug.action.toggleBreakpoint")
 step over: user.vscode("workbench.action.debug.stepOver")
@@ -180,13 +235,13 @@ debug pause: user.vscode("workbench.action.debug.pause")
 debug stopper: user.vscode("workbench.action.debug.stop")
 debug continue: user.vscode("workbench.action.debug.continue")
 debug restart: user.vscode("workbench.action.debug.restart")
-p
+
 # Terminal
 terminal external: user.vscode("workbench.action.terminal.openNativeConsole")
 terminal new: user.vscode("workbench.action.terminal.new")
 ^(new|launch) terminal$: user.vscode("workbench.action.terminal.new")
 terminal next: user.vscode("workbench.action.terminal.focusNextPane")
-terminal last: user.vscode("workbench.action.terminal.focusPreviousPane")
+terminal  last: user.vscode("workbench.action.terminal.focusPreviousPane")
 terminal split: user.vscode("workbench.action.terminal.split")
 terminal copy: user.vscode("workbench.action.terminal.selectAll")
 terminal (trash|kill): user.vscode("Terminal:Kill")
@@ -204,3 +259,13 @@ select to bracket: user.vscode("editor.action.selectToBracket")
 # Refactor
 
 # Find and replace
+action(user.tab_final): key(ctrl-0)
+#action(user.ide_go_second_tab): key(ctrl-2)
+#action(user.ide_go_third_tab): key(ctrl-3)
+#action(user.ide_go_fourth_tab): key(ctrl-4)
+#action(user.ide_go_fifth_tab): key(ctrl-5)
+#action(user.ide_go_sixth_tab): key(ctrl-6)
+#action(user.ide_go_seventh_tab): key(ctrl-7)
+#action(user.ide_go_eighth_tab): key(ctrl-8)
+#action(user.ide_go_ninth_tab): key(ctrl-9)
+#action(user.ide_clear_tab): key(cmd-w)

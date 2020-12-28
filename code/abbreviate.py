@@ -1,11 +1,14 @@
 # XXX - would be nice to be able pipe these through formatters
-
-from talon import Context, Module
+import sys
+from talon import Context, Module, actions
 
 mod = Module()
 mod.list("abbreviation", desc="Common abbreviation")
 
-
+@mod.capture
+def abbreviation(m) -> str:
+    "One abbreviation"
+    
 ctx = Context()
 ctx.lists["user.abbreviation"] = {
     "address": "addr",

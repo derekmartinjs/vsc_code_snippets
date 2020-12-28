@@ -1,8 +1,13 @@
 tag: ide 
 -
+refactor: user.ide_refactor()
+
 #refactor: user.ide_refactor()
 
-# Intellisense,
+# Intellisense, rich language support
+
+
+#complete: code.complete()
 
 # Recording 
 

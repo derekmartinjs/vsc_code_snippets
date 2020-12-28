@@ -28,7 +28,6 @@ punctuation = {
 
 no_space_after_these = set("-/(")
 
-
 class AutoFormat:
     def __init__(self):
         self.reset()

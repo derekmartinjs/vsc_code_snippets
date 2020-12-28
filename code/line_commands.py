@@ -13,7 +13,6 @@ mod.tag(
     desc="Tag for enabling generic line navigation and selection commands",
 )
 
-
 @mod.action_class
 class Actions:
   def extend_until_line(line: int):
@@ -21,7 +20,7 @@ class Actions:
 
   def select_range(line_start: int, line_end: int):
       """Selects lines from line_start to line line_end"""
-#      actions.edit.jump_line(line_start)
+      actions.edit.jump_line(line_start)
       actions.edit.extend_line_end()
 
       number_of_lines = line_end - line_start

@@ -4,7 +4,6 @@ from typing import Union
 mod = Module()
 mod.tag("find_and_replace", desc="Tag for enabling generic find and replace commands")
 
-
 @mod.action_class
 class Actions:
     def find(text: str):

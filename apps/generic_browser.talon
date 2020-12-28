@@ -30,6 +30,12 @@ bookmark tabs: browser.bookmark_tabs()
   insert("https://leetcode.com/problemset/all/")
   key(enter)
 
+
+^the atlantic:
+  key(cmd-t)
+  insert("theatlantic.com")
+  key(enter)
+
 news:
   key(cmd-t)
   insert("f5oclock.com")

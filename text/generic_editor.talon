@@ -1,5 +1,5 @@
-find it: 
-  edit.find()
+find it <user.text>: 
+  edit.find(text)
 
 next one:
   edit.find_next()
@@ -7,7 +7,7 @@ next one:
 go word left:
   edit.word_left()
 
-go word right:r
+go word right:
   edit.word_right()
 
 go left:
